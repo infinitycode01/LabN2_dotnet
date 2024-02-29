@@ -1,0 +1,14 @@
+/home/dmytro/Projects/C#/LabN2_dotnet/bin/Debug/net8.0/LabN2_dotnet
+/home/dmytro/Projects/C#/LabN2_dotnet/bin/Debug/net8.0/LabN2_dotnet.deps.json
+/home/dmytro/Projects/C#/LabN2_dotnet/bin/Debug/net8.0/LabN2_dotnet.runtimeconfig.json
+/home/dmytro/Projects/C#/LabN2_dotnet/bin/Debug/net8.0/LabN2_dotnet.dll
+/home/dmytro/Projects/C#/LabN2_dotnet/bin/Debug/net8.0/LabN2_dotnet.pdb
+/home/dmytro/Projects/C#/LabN2_dotnet/obj/Debug/net8.0/LabN2_dotnet.GeneratedMSBuildEditorConfig.editorconfig
+/home/dmytro/Projects/C#/LabN2_dotnet/obj/Debug/net8.0/LabN2_dotnet.AssemblyInfoInputs.cache
+/home/dmytro/Projects/C#/LabN2_dotnet/obj/Debug/net8.0/LabN2_dotnet.AssemblyInfo.cs
+/home/dmytro/Projects/C#/LabN2_dotnet/obj/Debug/net8.0/LabN2_dotnet.csproj.CoreCompileInputs.cache
+/home/dmytro/Projects/C#/LabN2_dotnet/obj/Debug/net8.0/LabN2_dotnet.dll
+/home/dmytro/Projects/C#/LabN2_dotnet/obj/Debug/net8.0/refint/LabN2_dotnet.dll
+/home/dmytro/Projects/C#/LabN2_dotnet/obj/Debug/net8.0/LabN2_dotnet.pdb
+/home/dmytro/Projects/C#/LabN2_dotnet/obj/Debug/net8.0/LabN2_dotnet.genruntimeconfig.cache
+/home/dmytro/Projects/C#/LabN2_dotnet/obj/Debug/net8.0/ref/LabN2_dotnet.dll
