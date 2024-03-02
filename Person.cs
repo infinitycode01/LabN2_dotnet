@@ -2,9 +2,9 @@ namespace LabN2_dotnet;
 
 public class Person : IDateAndCopy
 {
-    private string _firstName;
-    private string _lastName;
-    private DateTime _birthDate;
+    protected string _firstName;
+    protected string _lastName;
+    protected DateTime _birthDate;
 
 
     public Person(string firstName, string lastName, DateTime birthDate)

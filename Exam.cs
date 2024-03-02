@@ -4,15 +4,9 @@ public class Exam : IDateAndCopy
 {
     public string SubjectName { get; init; }
     public int Assessment { get; init; }
-    public System.DateTime ExamDate { get; init; }
+    public DateTime ExamDate { get; init; }
 
-    public DateTime Date
-    {
-        get { return ExamDate; }
-        init { ExamDate = value; }
-    }
-
-    public Exam(string name, int assessment, System.DateTime date)
+    public Exam(string name, int assessment, DateTime date)
     {
         SubjectName = name;
         Assessment = assessment;
@@ -20,6 +14,12 @@ public class Exam : IDateAndCopy
     }
 
     public Exam() : this(name: "Programming", assessment: 100, date: new DateTime(2024, 6, 12, 9, 0, 0)) { }
+
+    public DateTime Date
+    {
+        get { return ExamDate; }
+        init { ExamDate = value; }
+    }
 
     public override string ToString()
     {
