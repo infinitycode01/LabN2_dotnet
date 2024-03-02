@@ -1,20 +1,20 @@
 namespace LabN2_dotnet;
 
-public class Person
+public class Person : IDateAndCopy
 {
     private string _firstName;
     private string _lastName;
-    private System.DateTime _birthDate;
+    private DateTime _birthDate;
 
 
-    public Person(string firstName, string lastName, System.DateTime birthDate)
+    public Person(string firstName, string lastName, DateTime birthDate)
     {
         FirstName = firstName;
         LastName = lastName;
         BirthDate = birthDate;
     }
 
-    public Person(): this(firstName: "Dmytro", lastName: "Badichel", birthDate: new DateTime(2004, 9, 11, 7, 7, 7)) { }
+    public Person() : this(firstName: "Dmytro", lastName: "Badichel", birthDate: new DateTime(2004, 9, 11, 7, 7, 7)) { }
     
     public string FirstName
     {
@@ -28,7 +28,7 @@ public class Person
         init { _lastName = value; }
     }
 
-    public System.DateTime BirthDate
+    public DateTime BirthDate
     {
         get { return _birthDate; }
         init { _birthDate = value; }
@@ -41,6 +41,12 @@ public class Person
         {
             _birthDate = new DateTime(value, _birthDate.Month, _birthDate.Day);
         }
+    }
+
+    public DateTime Date
+    {
+        get { return BirthDate; }
+        init { BirthDate = value; }
     }
 
     public override string ToString()
@@ -77,5 +83,10 @@ public class Person
     public override int GetHashCode()
     {
         return (FirstName, LastName, BirthDate).GetHashCode();
+    }
+
+    public object DeepCopy()
+    {
+        return new Person(FirstName, LastName, Date);
     }
 }

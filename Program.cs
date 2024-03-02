@@ -4,12 +4,14 @@ class Program
 {
     static void Main(string[] args)
     {
-        Person person = new Person();
-        Person person1 = new Person();
-        Person person2 = new Person("Dima", "badichel", new DateTime(2010, 10, 10));
+        
+        Student student = new Student("dfdfdf", "Badfdfdfdfdichel", new DateTime(2000, 10, 10), Education.Master, 311);
+        Student student1 = new Student();
+        Console.WriteLine(student1.ToString());
 
-        Console.WriteLine(person2.GetHashCode());
+        student1 = (Student)student.DeepCopy();
 
+        Console.WriteLine(student1.ToString());
         
     }
 }
