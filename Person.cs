@@ -52,4 +52,30 @@ public class Person
 
     public string ToShortString() => "Name: " + FirstName + "\n" + "Surname: " + LastName;
 
+    public static bool operator == (Person obj1, Person obj2)
+    {
+        if (obj1 is null)
+            return obj2 is null;
+
+        return obj1.Equals(obj2);
+    }
+
+    public static bool operator != (Person obj1, Person obj2)
+    {
+        return !(obj1 == obj2);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj == null) return false;
+
+        return obj is Person obj2? (FirstName == obj2.FirstName 
+            && LastName == obj2.LastName 
+            && BirthDate == obj2.BirthDate): false;
+    }
+
+    public override int GetHashCode()
+    {
+        return (FirstName, LastName, BirthDate).GetHashCode();
+    }
 }
