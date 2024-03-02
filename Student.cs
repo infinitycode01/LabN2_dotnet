@@ -1,6 +1,8 @@
+using System.Collections;
+
 namespace LabN2_dotnet;
 
-public class Student: Person, IDateAndCopy
+public class Student: Person, IDateAndCopy, IEnumerable
 {
     private Education _educationForm;
     private int _groupNumber;
@@ -46,7 +48,17 @@ public class Student: Person, IDateAndCopy
     public int GroupNumber
     {
         get { return _groupNumber; }
-        init { _groupNumber = value; }
+        init 
+        {
+            if (value <= 100 || value > 699)
+            {
+                throw new ArgumentOutOfRangeException(
+                    paramName: nameof(GroupNumber),
+                    message: "Group number must be between 100 and 699."
+                );
+            }
+            _groupNumber = value;
+        }
     }
 
     public System.Collections.ArrayList? ExamsTaken
@@ -189,6 +201,46 @@ public class Student: Person, IDateAndCopy
         }
 
         return studentCopy;
+    }
+
+    public IEnumerator GetEnumerator()
+    {
+        if (Tests == null || Tests.Count == 0) 
+        {
+            throw new ArgumentException("Tests cannot be empty", nameof(Tests));
+        }
+        if (ExamsTaken == null || ExamsTaken.Count == 0) 
+        {
+            throw new ArgumentException("Exams cannot be empty", nameof(ExamsTaken));
+        }
+
+        Console.WriteLine("All tests and exams:");
+        foreach (var item in Tests)
+        {
+            yield return item;
+        }
+
+        foreach (var item in ExamsTaken)
+        {
+            yield return item;
+        }
+    }
+
+    public IEnumerable<Exam> GetExamsWithGradeGreaterThan(double grade)
+    {
+        if (ExamsTaken == null || ExamsTaken.Count == 0) 
+        {
+            throw new ArgumentException("Exams cannot be empty", nameof(ExamsTaken));
+        }
+
+        Console.WriteLine("Exams with grade grater than " + grade + ":");
+        foreach (var exam in ExamsTaken)
+        {
+            if (exam is Exam && ((Exam)exam).Assessment > grade)
+            {
+                yield return (Exam)exam;
+            }
+        }
     }
 }
 
