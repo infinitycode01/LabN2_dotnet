@@ -6,26 +6,24 @@ public class Student: Person, IDateAndCopy, IEnumerable
 {
     private Education _educationForm;
     private int _groupNumber;
-    private System.Collections.ArrayList? _tests;
-    private System.Collections.ArrayList? _examsTaken;
+    private ArrayList? _tests;
+    private ArrayList? _examsTaken;
 
     public Student(Person studentData, Education educationForm, int groupNumber)
         : base(studentData.FirstName, studentData.LastName, studentData.BirthDate)
     {
         EducationForm = educationForm;
         GroupNumber = groupNumber;
-        Tests = new System.Collections.ArrayList();
-        ExamsTaken = new System.Collections.ArrayList();
+        Tests = new ArrayList();
+        ExamsTaken = new ArrayList();
     }
 
     public Student() : base()
     {
         EducationForm = Education.Bachelor;
         GroupNumber = 111;
-        Tests = new System.Collections.ArrayList();
-        Tests.Add(new Test());
-        ExamsTaken = new System.Collections.ArrayList();
-        ExamsTaken.Add(new Exam());
+        Tests = [new Test()];
+        ExamsTaken = [new Exam()];
     }
 
     public Person StudentData
@@ -39,7 +37,7 @@ public class Student: Person, IDateAndCopy, IEnumerable
         }
     }
 
-     public Education EducationForm
+    public Education EducationForm
     {
         get { return _educationForm; }
         init { _educationForm = value; }
@@ -61,13 +59,13 @@ public class Student: Person, IDateAndCopy, IEnumerable
         }
     }
 
-    public System.Collections.ArrayList? ExamsTaken
+    public ArrayList? ExamsTaken
     {
         get { return _examsTaken; }
         init { _examsTaken = value; }
     }
 
-    public System.Collections.ArrayList? Tests
+    public ArrayList? Tests
     {
         get { return _tests; }
         init { _tests = value; }
@@ -125,7 +123,7 @@ public class Student: Person, IDateAndCopy, IEnumerable
             _tests.Add(test);
         }
         
-        Console.WriteLine("Exams was added successfully");
+        Console.WriteLine("Tests was added successfully");
     }
 
     public override string ToString()
@@ -201,17 +199,13 @@ public class Student: Person, IDateAndCopy, IEnumerable
         }
 
         return studentCopy;
-    }
+    }   
 
     public IEnumerator GetEnumerator()
     {
-        if (Tests == null || Tests.Count == 0) 
+        if (Tests == null || Tests.Count == 0 || ExamsTaken == null || ExamsTaken.Count == 0) 
         {
-            throw new ArgumentException("Tests cannot be empty", nameof(Tests));
-        }
-        if (ExamsTaken == null || ExamsTaken.Count == 0) 
-        {
-            throw new ArgumentException("Exams cannot be empty", nameof(ExamsTaken));
+            throw new ArgumentNullException("Tests or Exams cannot be empty");
         }
 
         Console.WriteLine("All tests and exams:");
@@ -226,7 +220,19 @@ public class Student: Person, IDateAndCopy, IEnumerable
         }
     }
 
-    public IEnumerable<Exam> GetExamsWithGradeGreaterThan(double grade)
+    /*public IEnumerator GetEnumerator()
+    {
+        if (Tests == null || Tests.Count == 0 || ExamsTaken == null || ExamsTaken.Count == 0)
+        {
+            throw new ArgumentNullException("Tests or Exams cannot be empty");
+        }
+
+        Console.WriteLine("All tests and exams:");
+
+        return new StudentEnumerator(this);
+    }*/
+
+    public IEnumerable GetExamsWithGradeGreaterThan(double grade)
     {
         if (ExamsTaken == null || ExamsTaken.Count == 0) 
         {
@@ -238,9 +244,27 @@ public class Student: Person, IDateAndCopy, IEnumerable
         {
             if (exam is Exam && ((Exam)exam).Assessment > grade)
             {
-                yield return (Exam)exam;
+                yield return exam;
+            }
+        }
+    }
+
+    public IEnumerator GetIntersection()
+    {
+        if (Tests == null || Tests.Count == 0 || ExamsTaken == null || ExamsTaken.Count == 0) 
+        {
+            throw new ArgumentNullException("Tests or Exams cannot be empty");
+        }
+
+        foreach (Test test in Tests)
+        {
+            foreach (Exam exam in ExamsTaken)
+            {
+                if (test.SubjectName == exam.SubjectName)
+                {
+                    yield return test.SubjectName;
+                }
             }
         }
     }
 }
-
