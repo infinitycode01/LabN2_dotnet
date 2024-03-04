@@ -33,6 +33,8 @@ public class StudentEnumerator : IEnumerator
                 _examSubjects.Add(exam.SubjectName);
             }
         }
+
+        
     }
 
     public object Current

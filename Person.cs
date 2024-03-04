@@ -2,8 +2,8 @@ namespace LabN2_dotnet;
 
 public class Person : IDateAndCopy
 {
-    protected string _firstName;
-    protected string _lastName;
+    protected string _firstName = default!;
+    protected string _lastName = default!;
     protected DateTime _birthDate;
 
 
@@ -71,22 +71,20 @@ public class Person : IDateAndCopy
         return !(obj1 == obj2);
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
-        if (obj == null) return false;
-
-        return obj is Person obj2? (FirstName == obj2.FirstName 
+        return obj is Person obj2 && FirstName == obj2.FirstName 
             && LastName == obj2.LastName 
-            && BirthDate == obj2.BirthDate): false;
+            && BirthDate == obj2.BirthDate;
     }
 
     public override int GetHashCode()
     {
-        return (FirstName, LastName, BirthDate).GetHashCode();
+        return HashCode.Combine(FirstName, LastName, BirthDate);
     }
 
     public object DeepCopy()
     {
-        return new Person(FirstName, LastName, Date);
+        return MemberwiseClone();
     }
 }

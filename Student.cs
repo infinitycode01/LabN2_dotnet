@@ -18,17 +18,11 @@ public class Student: Person, IDateAndCopy, IEnumerable
         ExamsTaken = new ArrayList();
     }
 
-    public Student() : base()
-    {
-        EducationForm = Education.Bachelor;
-        GroupNumber = 111;
-        Tests = [new Test()];
-        ExamsTaken = [new Exam()];
-    }
+    public Student() : this(studentData: new Person(), educationForm: Education.Bachelor, groupNumber: 111) { }
 
     public Person StudentData
     {
-        get { return new Person(FirstName, LastName, BirthDate); }
+        get { return this; }
         init 
         {
             FirstName = value.FirstName;
@@ -71,12 +65,6 @@ public class Student: Person, IDateAndCopy, IEnumerable
         init { _tests = value; }
     }
 
-    public DateTime Date
-    {
-        get { return BirthDate; }
-        init {  BirthDate = value; }
-    }
-
     public double AverageGrade
     {
         get 
@@ -103,6 +91,11 @@ public class Student: Person, IDateAndCopy, IEnumerable
             return;
         }
 
+        if (_examsTaken == null)
+        {
+            _examsTaken = new ArrayList();
+        }
+
         foreach (var exam in newExams)
         {
             _examsTaken.Add(exam);
@@ -117,6 +110,11 @@ public class Student: Person, IDateAndCopy, IEnumerable
         {
             return;
         }
+
+        if (_tests == null)
+        {
+            _tests = new ArrayList();
+        } 
 
         foreach (var test in newTests)
         {
@@ -183,18 +181,29 @@ public class Student: Person, IDateAndCopy, IEnumerable
     public object DeepCopy()
     {
         Student studentCopy = new Student(new Person(FirstName, LastName, Date), EducationForm, GroupNumber);
+        
+        if ((Tests == null || Tests.Count == 0) && (ExamsTaken == null || ExamsTaken.Count == 0)) 
+        {
+            return studentCopy;
+        }
 
         if (Tests != null && Tests.Count > 0)
         {
             Test[] testsCopy = new Test[Tests.Count];
-            Tests.CopyTo(testsCopy);
+            foreach (Test test in Tests)
+            {
+                testsCopy = test.DeepCopy() as Test[];
+            }
             studentCopy.AddTests(testsCopy);
         }
 
         if (ExamsTaken != null && ExamsTaken.Count > 0)
         {
             Exam[] examsCopy = new Exam[ExamsTaken.Count];
-            ExamsTaken.CopyTo(examsCopy);
+            foreach (Exam exam in ExamsTaken)
+            {
+                examsCopy = exam.DeepCopy() as Exam[];
+            }
             studentCopy.AddExams(examsCopy);
         }
 
@@ -203,20 +212,26 @@ public class Student: Person, IDateAndCopy, IEnumerable
 
     public IEnumerator GetEnumerator()
     {
-        if (Tests == null || Tests.Count == 0 || ExamsTaken == null || ExamsTaken.Count == 0) 
+        if ((Tests == null || Tests.Count == 0) && (ExamsTaken == null || ExamsTaken.Count == 0)) 
         {
-            throw new ArgumentNullException("Tests or Exams cannot be empty");
+            yield break;
         }
 
         Console.WriteLine("All tests and exams:");
-        foreach (var item in Tests)
+        if (Tests != null && Tests.Count > 0)
         {
-            yield return item;
+            foreach (var item in Tests)
+            {
+                yield return item;
+            }
         }
-
-        foreach (var item in ExamsTaken)
+        
+        if (ExamsTaken != null && ExamsTaken.Count > 0)
         {
-            yield return item;
+            foreach (var item in ExamsTaken)
+            {
+                yield return item;
+            }
         }
     }
 
@@ -236,7 +251,7 @@ public class Student: Person, IDateAndCopy, IEnumerable
     {
         if (ExamsTaken == null || ExamsTaken.Count == 0) 
         {
-            throw new ArgumentException("Exams cannot be empty", nameof(ExamsTaken));
+            yield break;
         }
 
         Console.WriteLine("Exams with grade grater than " + grade + ":");

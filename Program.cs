@@ -21,6 +21,7 @@ class Program
         Student studentCopy = new Student();
         studentCopy = (Student)studentOriginal.DeepCopy();
         studentOriginal.AddTests(new Test());
+        //((Test)studentOriginal.Tests[0]).SubjectName = "Golang1"; to check this line change Test class init => get
         Console.WriteLine(studentOriginal.ToString());
         Console.WriteLine(studentCopy.ToString());
 
@@ -35,7 +36,7 @@ class Program
             Console.WriteLine($"Processing failed: {e.Message}");
         }
 
-        foreach (var exam in studentOriginal.GetExamsWithGradeGreaterThan(90))
+        foreach (var exam in studentOriginal.GetExamsWithGradeGreaterThan(85))
         {
             Console.WriteLine(exam);
         }

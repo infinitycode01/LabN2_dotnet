@@ -30,6 +30,6 @@ public class Exam : IDateAndCopy
 
     public object DeepCopy()
     {
-        return new Exam(SubjectName, Assessment, Date);
+        return MemberwiseClone();
     }
 }
