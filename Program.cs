@@ -1,10 +1,12 @@
-﻿namespace LabN2_dotnet;
+﻿using System.Collections;
+
+namespace LabN2_dotnet;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Person person = new Person("alberto", "albo", new DateTime(2000, 10, 10));
+        /*Person person = new Person("alberto", "albo", new DateTime(2000, 10, 10));
         Person person1 = new Person("alberto", "albo", new DateTime(2000, 10, 10));
         Console.WriteLine(person.GetHashCode());
         Console.WriteLine(person1.GetHashCode());
@@ -39,6 +41,18 @@ class Program
         foreach (var exam in studentOriginal.GetExamsWithGradeGreaterThan(85))
         {
             Console.WriteLine(exam);
+        }*/
+
+        Student studentOriginal = new Student();
+        Exam[] newExams = [new Exam("C00000", 80, new DateTime(2000, 10, 10)), new Exam("C++", 100, new DateTime(2000, 10, 10)), new Exam("Java", 120, new DateTime(2000, 10, 10))];
+        Test[] newTests = [new Test("Golang", true), new Test("C", true), new Test("python", false)];
+        studentOriginal.AddExams(newExams);
+        studentOriginal.AddTests(newTests);
+
+        ArrayList testAndExam = new ArrayList(studentOriginal.GetAllTestAndExam());
+        foreach (var item in testAndExam)
+        {
+            Console.WriteLine(item);
         }
     }
 }

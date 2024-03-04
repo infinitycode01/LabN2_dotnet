@@ -210,19 +210,21 @@ public class Student: Person, IDateAndCopy, IEnumerable
         return studentCopy;
     }   
 
-    public IEnumerator GetEnumerator()
+    public ArrayList GetAllTestAndExam()
     {
         if ((Tests == null || Tests.Count == 0) && (ExamsTaken == null || ExamsTaken.Count == 0)) 
         {
-            yield break;
+            return new ArrayList();
         }
+
+        ArrayList allTestAndExam = new ArrayList();
 
         Console.WriteLine("All tests and exams:");
         if (Tests != null && Tests.Count > 0)
         {
             foreach (var item in Tests)
             {
-                yield return item;
+                allTestAndExam.Add(item);
             }
         }
         
@@ -230,12 +232,13 @@ public class Student: Person, IDateAndCopy, IEnumerable
         {
             foreach (var item in ExamsTaken)
             {
-                yield return item;
+                allTestAndExam.Add(item);
             }
         }
+        return allTestAndExam;
     }
 
-    /*public IEnumerator GetEnumerator()
+    public IEnumerator GetEnumerator()
     {
         if (Tests == null || Tests.Count == 0 || ExamsTaken == null || ExamsTaken.Count == 0)
         {
@@ -245,7 +248,7 @@ public class Student: Person, IDateAndCopy, IEnumerable
         Console.WriteLine("All tests and exams:");
 
         return new StudentEnumerator(this);
-    }*/
+    }
 
     public IEnumerable GetExamsWithGradeGreaterThan(double grade)
     {
